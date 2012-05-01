@@ -20,7 +20,11 @@ DART_SDK=$BUILD_DIR/dart-sdk
 if [ ! -d "dart-sdk" ]; then
   message "-----> Installing latest Dart VM"
   cd $BUILD_DIR
-  curl -L $DART_SDK_URL -s -o - | tar xzf - 
+  file=dart-linux.zip
+
+  curl -sO -L $DART_SDK_URL -o $file
+  unzip $file
+  rm -f $file
 fi
 
 mkdir -p $BUILD_DIR/bin
