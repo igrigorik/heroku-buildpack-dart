@@ -1,0 +1,1 @@
+web: dart main.dart

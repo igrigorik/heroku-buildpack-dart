@@ -1,5 +1,5 @@
 before() {
-  cp -r test detect-test
+  cp -r test-app detect-test
 }
 
 after() {

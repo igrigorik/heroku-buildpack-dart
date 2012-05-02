@@ -4,5 +4,5 @@
 cat <<EOF
 ---
 config_vars:
-  PATH: bin:/app/bin:/usr/local/bin:/usr/bin:/bin
+  PATH: /app/bin:/usr/local/bin:/usr/bin:/bin
 EOF

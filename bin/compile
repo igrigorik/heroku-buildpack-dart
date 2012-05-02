@@ -25,6 +25,7 @@ if [ ! -d "dart-sdk" ]; then
 
   cd $BUILD_DIR
   curl -L $DART_SDK_URL -s -o - | tar xzf -
+  curl -L http://commondatastorage.googleapis.com/dartvm/dart-linux.tar.gz -s -o - | tar xzf -
 fi
 
 mkdir -p $BUILD_DIR/bin

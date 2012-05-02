@@ -2,7 +2,7 @@
 
 before() {
   mkdir -p build cache
-  cp -r test/* build
+  cp -r test-app/* build
 }
 
 after() {
