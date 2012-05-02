@@ -14,17 +14,17 @@ function message {
   sync
 }
 
-DART_SDK_URL="https://gsdview.appspot.com/dart-editor-archive-continuous/latest/dart-linux.zip"
+# official VM is .zip only, which unfortuantely we can't extract on Heroku (doh)
+# DART_SDK_SOURCE="https://gsdview.appspot.com/dart-editor-archive-continuous/latest/dart-linux.zip"
+
+DART_SDK_URL="http://commondatastorage.googleapis.com/dartvm/dart-linux.tar.gz"
 DART_SDK=$BUILD_DIR/dart-sdk
 
 if [ ! -d "dart-sdk" ]; then
   message "-----> Installing latest Dart VM"
-  cd $BUILD_DIR
-  file=dart-linux.zip
 
-  curl -sO -L $DART_SDK_URL -o $file
-  unzip $file
-  rm -f $file
+  cd $BUILD_DIR
+  curl -L $DART_SDK_URL -s -o - | tar xzf -
 fi
 
 mkdir -p $BUILD_DIR/bin
