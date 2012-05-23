@@ -18,13 +18,13 @@ compile() {
 it_fetches_dart() {
   rm -rf cache
   mkdir cache
-  ! test -f cache/dart-sdk/bin/dart
+  ! test -f cache/dart
   compile
-  test -f cache/dart-sdk/bin/dart
+  test -f cache/dart
 }
 
 it_skips_dart_fetch_if_exists() {
-  test -f cache/dart-sdk/bin/dart
+  test -f cache/dart
   compile | grep "Skipping build"
 }
 
