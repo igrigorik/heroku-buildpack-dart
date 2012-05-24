@@ -3,6 +3,7 @@
 
 # fail fast
 set -e
+set -x
 unset GIT_DIR
 
 mkdir -p "$1" "$2"
@@ -17,16 +18,16 @@ function message {
 # official VM is .zip only, which unfortuantely we can't extract on Heroku (doh)
 # DART_SDK_SOURCE="https://gsdview.appspot.com/dart-editor-archive-continuous/latest/dart-linux.zip"
 
-DART_SDK_URL="http://commondatastorage.googleapis.com/dartvm/dart-linux.tar.gz"
-DART_SDK=$BUILD_DIR/dart-sdk
+DART_SDK_URL="http://dl.dropbox.com/u/37984425/dart_x64_bin.tgz"
 
-if [ ! -d "dart-sdk" ]; then
+if [ ! -e "$CACHE_DIR/dart" ]; then
   message "-----> Installing latest Dart VM"
 
-  cd $BUILD_DIR
+  cd $CACHE_DIR
   curl -L $DART_SDK_URL -s -o - | tar xzf -
-  curl -L http://commondatastorage.googleapis.com/dartvm/dart-linux.tar.gz -s -o - | tar xzf -
+else
+  message "-----> Using cached Dart VM"
 fi
 
 mkdir -p $BUILD_DIR/bin
-mv $DART_SDK/bin/* $BUILD_DIR/bin
+cp $CACHE_DIR/dart $BUILD_DIR/bin/dart
