@@ -18,7 +18,7 @@ function message {
 # official VM is .zip only, which unfortuantely we can't extract on Heroku (doh)
 # DART_SDK_SOURCE="https://gsdview.appspot.com/dart-editor-archive-continuous/latest/dart-linux.zip"
 
-DART_SDK_URL="http://dl.dropbox.com/u/37984425/dart_x64_bin.tgz"
+DART_SDK_URL="http://commondatastorage.googleapis.com/dartvm/dart_x64_bin-23.05.2012.tgz"
 
 if [ ! -e "$CACHE_DIR/dart" ]; then
   message "-----> Installing latest Dart VM"

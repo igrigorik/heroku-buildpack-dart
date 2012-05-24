@@ -1,13 +1,6 @@
 # Heroku Buildpack: Dart
 
-*Work in progress*
-
-This is a Heroku buildpack for [Dart](http://www.dartlang.org/). Status:
-
-- https://gist.github.com/299535bbf56bf3016cba
-- http://code.google.com/p/dart/issues/detail?id=2052
-
-TL;DR: Dart is 32 bit only at the moment, Heroku doesn't play well with 32 bit binaries.
+This is a Heroku buildpack for [Dart](http://www.dartlang.org/). At the moment Dart is officially [32 bit only](http://code.google.com/p/dart/issues/detail?id=2052), and unfortunately Heroku does not currently provide [support for 32 bit binaries](https://gist.github.com/47b77852c50cb8f57961). Because of this, this buildpack is using a custom / frozen (May 23, 2012) 64 bit build.
 
 ## Getting Started
 
