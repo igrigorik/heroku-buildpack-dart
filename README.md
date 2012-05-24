@@ -24,6 +24,8 @@ $> git push heroku master
 $> curl http://myapp_name.herokuapp.com/
 ```
 
+See `test-app` directory for the world simplest Dart web app running on Heroku: [dartvm.herokuapp.com](http://dartvm.herokuapp.com/)
+
 ## License
 
 The MIT License - Copyright (c) 2012 Ilya Grigorik
