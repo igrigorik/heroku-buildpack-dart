@@ -21,14 +21,14 @@ function message {
 #DART_SDK_URL="http://commondatastorage.googleapis.com/dartvm/dart_x64_bin-23.05.2012.tgz"
 DART_SDK_URL="http://commondatastorage.googleapis.com/dartvm/dart_x64_bin-30.05.2012.tgz"
 
-if [ ! -e "$CACHE_DIR/dart" ]; then
+#if [ ! -e "$CACHE_DIR/dart" ]; then
   message "-----> Installing latest Dart VM"
 
   cd $CACHE_DIR
   curl -L $DART_SDK_URL -s -o - | tar xzf -
-else
-  message "-----> Using cached Dart VM"
-fi
+#else
+#  message "-----> Using cached Dart VM"
+#fi
 
 mkdir -p $BUILD_DIR/bin
 cp $CACHE_DIR/dart $BUILD_DIR/bin/dart
