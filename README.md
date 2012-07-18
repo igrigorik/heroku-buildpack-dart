@@ -6,7 +6,7 @@ This is a Heroku buildpack for [Dart](http://www.dartlang.org/). At the moment D
 
 ```bash
 $> heroku create myapp_name -s cedar
-$> heroku config:add BUILDPACK_URL=git@github.com:igrigorik/heroku-buildpack-dart.git
+$> heroku config:add BUILDPACK_URL=https://github.com/igrigorik/heroku-buildpack-dart.git
 
 # create your app, see test-app for an example
 
