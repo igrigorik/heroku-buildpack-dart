@@ -27,4 +27,4 @@ DART_SDK_URL="http://commondatastorage.googleapis.com/dart-editor-archive-integr
 #fi
 
 mkdir -p $BUILD_DIR/bin
-cp $CACHE_DIR/dart $BUILD_DIR/bin/dart
+cp $CACHE_DIR/dart-sdk/bin/dart $BUILD_DIR/bin/dart
