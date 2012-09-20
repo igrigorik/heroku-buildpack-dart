@@ -3,7 +3,7 @@
 
 main() {
   var server = new HttpServer();
-  int port = Math.parseInt(Platform.environment['PORT']);
+  var port = int.parse(Platform.environment['PORT']);
   server.listen('0.0.0.0', port);
   print('Server started on port: ${port}');
 
