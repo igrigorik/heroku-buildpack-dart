@@ -2,6 +2,8 @@
 
 This is a Heroku buildpack for [Dart](http://www.dartlang.org/).
 
+Installation of packages through [pub](http://pub.dartlang.org/) is supported.
+
 ## Getting Started
 
 ```bash
@@ -15,7 +17,12 @@ $> git push heroku master
 -----> Heroku receiving push
 -----> Fetching custom buildpack... done
 -----> Dart app detected
------> Installing latest Dart VM
+-----> Installing Dart VM, build: latest
+-----> Copy Dart binaries to app root
+-----> Install packages
+.
+[...]
+.
 -----> Discovering process types
        Procfile declares types -> web
 -----> Compiled slug size is 10.5MB
@@ -23,6 +30,21 @@ $> git push heroku master
 
 $> curl http://myapp_name.herokuapp.com/
 ```
+
+## Configuration
+You can specify the version of the dart-sdk that should be used by
+
+```bash
+$> heroku config:set BUILD=<version number>
+```
+A list of versions can be found [here](http://commondatastorage.googleapis.com/dart-editor-archive-integration/latest/changelog.html)
+
+In order for the build version to come through in to the build pack you also need to set an experimental flag on Heroku
+
+```bash
+$> heroku labs:enable user-env-compile
+```
+More info on that can be found in [Heroku's Devcenter: Heroku Labs: user-env-compile](https://devcenter.heroku.com/articles/labs-user-env-compile)
 
 See `test-app` directory for the world simplest Dart web app running on Heroku: [dartvm.herokuapp.com](http://dartvm.herokuapp.com/)
 

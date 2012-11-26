@@ -10,21 +10,54 @@ mkdir -p "$1" "$2"
 BUILD_DIR=$(cd "$1/" && pwd)
 CACHE_DIR=$(cd "$2/" && pwd)
 
+# the directory in which the packages will be stored
+PACKAGES_DIR="tmp/repo.git/.cache"
+
+# this variable is used by pub to determine the package install location
+PUB_CACHE="$CACHE_DIR/pub-cache"
+export PUB_CACHE
+
+
 function message {
   echo "$1"
   sync
 }
 
-DART_SDK_URL="http://commondatastorage.googleapis.com/dart-editor-archive-integration/latest/dartsdk-linux-64.tar.gz"
+# if no build number is set, download latest
+if [ -z "$BUILD" ]; then
+    BUILD="latest"
+fi
 
-#if [ ! -e "$CACHE_DIR/dart" ]; then
-  message "-----> Installing latest Dart VM"
+DART_SDK_URL="http://commondatastorage.googleapis.com/dart-editor-archive-integration/$BUILD/dartsdk-linux-64.tar.gz"
 
-  cd $CACHE_DIR
-  curl -L $DART_SDK_URL -s -o - | tar xzf -
-#else
-#  message "-----> Using cached Dart VM"
-#fi
+cd $BUILD_DIR
+mkdir -p $PACKAGES_DIR
 
-mkdir -p $BUILD_DIR/bin
-cp $CACHE_DIR/dart-sdk/bin/dart $BUILD_DIR/bin/dart
+
+message "-----> Installing Dart VM, build: $BUILD"
+
+cd $CACHE_DIR
+curl -L $DART_SDK_URL -s -o - | tar xzf -
+
+
+message "-----> Copy Dart binaries to app root"
+
+cp -r $CACHE_DIR/dart-sdk $BUILD_DIR
+
+# we need to copy the sdk into the /app folder in order for the sdk libraries to be referenced correctly
+# reason being that the /tmp folder will be deleted after build, and /app resembles the location of the ready built app
+cp -r $CACHE_DIR/dart-sdk /app
+
+
+message "-----> Install packages"
+
+cd $BUILD_DIR
+
+#start pub from the /app folder to have correct symlink paths
+/app/dart-sdk/bin/pub install
+
+# move packages from cache directory into build directory
+cd $CACHE_DIR
+cp -r $CACHE_DIR/pub-cache $BUILD_DIR/$PACKAGES_DIR
+
+
