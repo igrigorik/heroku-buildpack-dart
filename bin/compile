@@ -16,7 +16,7 @@ PACKAGES_DIR="tmp/repo.git/.cache"
 # this variable is used by pub to determine the package install location
 PUB_CACHE="$CACHE_DIR/pub-cache"
 export PUB_CACHE
-
+mkdir -p $PUB_CACHE
 
 function message {
   echo "$1"
