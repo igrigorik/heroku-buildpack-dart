@@ -32,19 +32,35 @@ $> curl http://myapp_name.herokuapp.com/
 ```
 
 ## Configuration
+
+#### Build Version
+
 You can specify the version of the dart-sdk that should be used by
 
 ```bash
 $> heroku config:set BUILD=<version number>
 ```
-A list of versions can be found [here](http://commondatastorage.googleapis.com/dart-editor-archive-integration/latest/changelog.html)
 
-In order for the build version to come through in to the build pack you also need to set an experimental flag on Heroku
+A list of versions can be found [here](http://commondatastorage.googleapis.com/dart-editor-archive-integration/latest/changelog.html), by default `latest` is chosen. 
+
+#### Archive Location
+
+The build archive location can be modified to choose between [continuous](http://commondatastorage.googleapis.com/dart-editor-archive-continuous) or [integration](http://commondatastorage.googleapis.com/dart-editor-archive-integration), by default integration archive is chosen. 
+
+```bash
+$> heroku config:set ARCHIVE=<archive url>
+```
+
+#### Enable ENV Variables
+
+In order for the build version or archive to come through in to the build pack you also need to set an experimental flag on Heroku
 
 ```bash
 $> heroku labs:enable user-env-compile
 ```
 More info on that can be found in [Heroku's Devcenter: Heroku Labs: user-env-compile](https://devcenter.heroku.com/articles/labs-user-env-compile)
+
+## Example 
 
 See `test-app` directory for the world simplest Dart web app running on Heroku: [dartvm.herokuapp.com](http://dartvm.herokuapp.com/)
 
