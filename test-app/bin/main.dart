@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'dart:json';
+import 'dart:json' as JSON;
 
 main() {
   var server = new HttpServer();
