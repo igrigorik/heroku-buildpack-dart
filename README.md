@@ -4,6 +4,8 @@ This is a Heroku buildpack for [Dart](http://www.dartlang.org/).
 
 Installation of packages through [pub](http://pub.dartlang.org/) is supported.
 
+A Dart build script (build.dart) will be executed if found.
+
 ## Getting Started
 
 ```bash
