@@ -9,6 +9,7 @@ unset GIT_DIR
 mkdir -p "$1" "$2"
 BUILD_DIR=$(cd "$1/" && pwd)
 CACHE_DIR=$(cd "$2/" && pwd)
+BIN_DIR="$( cd "$( dirname "$0" )" && pwd )"
 
 # the directory in which the packages will be stored
 PACKAGES_DIR="tmp/repo.git/.cache"
@@ -52,7 +53,6 @@ cp -r $CACHE_DIR/dart-sdk /app
 message "-----> Install packages"
 
 cd $BUILD_DIR
-
 for filename in `find . -name pubspec.yaml | grep -v dart-sdk | grep -v pub-cache`; do
     pub_dir=`dirname $filename`
     message "*** Found pubspec.yaml in $pub_dir"
@@ -60,12 +60,6 @@ for filename in `find . -name pubspec.yaml | grep -v dart-sdk | grep -v pub-cach
 
     #start pub from the /app folder to have correct symlink paths
     /app/dart-sdk/bin/pub install
-
-    if [ -e $BUILD_DIR/$pub_dir/web/packages ]; then
-        cd $BUILD_DIR/$pub_dir/web
-        ln -sf ../packages
-        message "Fixed web symlink"
-    fi
 done
 
 # move packages from cache directory into build directory
@@ -74,7 +68,32 @@ cp -r $CACHE_DIR/pub-cache $BUILD_DIR/$PACKAGES_DIR
 
 # run Dart build script
 cd $BUILD_DIR
+export PATH=/app/dart-sdk/bin:$PATH
 if [ -e "build.dart" ]; then
 	message "-----> Run Dart build script (build.dart)"
-	/app/dart-sdk/bin/dart --package-root=packages/ build.dart
+	dart --package-root=packages/ build.dart
 fi
+
+# fix symlinks
+cd $BUILD_DIR
+for filename in `find . -name pubspec.yaml | grep -v dart-sdk | grep -v pub-cache`; do
+    pub_dir=`dirname $filename`
+    message "*** Fixing symlinks in in $pub_dir"
+    cd $BUILD_DIR/$pub_dir
+
+    for pdir in `find web -name packages -type l`; do
+        relpath=`$BIN_DIR/relpath "$( dirname "$pdir" )" "$BUILD_DIR/$pub_dir/packages"`
+        rm -f "$pdir"
+        ln -sf "$relpath" "$pdir"
+        target=`readlink "$pdir"`
+        if [ "$target" = "$relpath" ]
+        then
+            message "Fixed symlink $pdir -> $target"
+        else
+            message "Failed to fix $pdir -> $relpath"
+            message "Link: $pdir -> $target"
+            exit 1
+        fi
+    done
+done
+
