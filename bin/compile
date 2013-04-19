@@ -63,7 +63,7 @@ for filename in `find . -name pubspec.yaml | grep -v dart-sdk | grep -v pub-cach
 
     for pdir in `find web -name packages -type l`; do
         ln -sf $BUILD_DIR/$pub_dir/packages $pdir
-        message "Fixed packages symlinks for web"
+        message "Fixed symlink $pdir -> $BUILD_DIR/$pub_dir/packages"
     done
 done
 
