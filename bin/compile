@@ -61,10 +61,10 @@ for filename in `find . -name pubspec.yaml | grep -v dart-sdk | grep -v pub-cach
     #start pub from the /app folder to have correct symlink paths
     /app/dart-sdk/bin/pub install
 
-    if [ -e $BUILD_DIR/$pub_dir/web/packages ]; then
+    for pdir in `find $BUILD_DIR/$pub_dir/web -name packages -type l`; do
         cd $BUILD_DIR/$pub_dir/web
-        ln -sf ../packages
-        message "Fixed web symlink"
+        ln -sf $BUILD_DIR/$PACKAGES_DIR $pdir
+        message "Fixed packages symlinks for web"
     fi
 done
 
