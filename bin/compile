@@ -9,6 +9,7 @@ unset GIT_DIR
 mkdir -p "$1" "$2"
 BUILD_DIR=$(cd "$1/" && pwd)
 CACHE_DIR=$(cd "$2/" && pwd)
+BIN_DIR="$( cd "$( dirname "$0" )" && pwd )"
 
 # the directory in which the packages will be stored
 PACKAGES_DIR="tmp/repo.git/.cache"
@@ -62,7 +63,7 @@ for filename in `find . -name pubspec.yaml | grep -v dart-sdk | grep -v pub-cach
     /app/dart-sdk/bin/pub install
 
     for pdir in `find web -name packages -type l`; do
-        relpath=`relpath $BUILD_DIR/$pub_dir/packages $pdir`
+        relpath=`$BIN_DIR/relpath $BUILD_DIR/$pub_dir/packages $pdir`
         ln -sf $relpath $pdir
         message "Fixed symlink $pdir -> $relpath"
     done
