@@ -65,7 +65,7 @@ for filename in `find . -name pubspec.yaml | grep -v dart-sdk | grep -v pub-cach
         cd $BUILD_DIR/$pub_dir/web
         ln -sf $BUILD_DIR/$PACKAGES_DIR $pdir
         message "Fixed packages symlinks for web"
-    fi
+    done
 done
 
 # move packages from cache directory into build directory
