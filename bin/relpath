@@ -3,7 +3,21 @@
 # usage: relpath from to
 # see: http://stackoverflow.com/a/2565106/37416
 
-if [[ "$1" == "$2" ]]
+if [ -d "$1" ]
+then
+    D1="$( cd "$1" && pwd )"
+else
+    D1="$( cd "$( dirname "$1" )" && pwd )/$( basename "$1" )"
+fi
+
+if [ -d "$2" ]
+then
+    D2="$( cd "$2" && pwd )"
+else
+    D2="$( cd "$( dirname "$2" )" && pwd )/$( basename "$2" )"
+fi
+
+if [[ "$D1" == "$D2" ]]
 then
     echo "."
     exit
@@ -11,8 +25,8 @@ fi
 
 IFS="/"
 
-current=($1)
-absolute=($2)
+current=($D1)
+absolute=($D2)
 
 abssize=${#absolute[@]}
 cursize=${#current[@]}
