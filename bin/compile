@@ -82,10 +82,10 @@ for filename in `find . -name pubspec.yaml | grep -v dart-sdk | grep -v pub-cach
     cd $BUILD_DIR/$pub_dir
 
     for pdir in `find web -name packages -type l`; do
-        relpath=`$BIN_DIR/relpath $pdir $BUILD_DIR/$pub_dir/packages`
-        rm -f $pdir
-        ln -sfv $relpath $pdir
-        target=`readlink $pdir`
+        relpath=`$BIN_DIR/relpath "$( dirname "$pdir" )" "$BUILD_DIR/$pub_dir/packages"`
+        rm -f "$pdir"
+        ln -sf "$relpath" "$pdir"
+        target=`readlink "$pdir"`
         if [ "$target" = "$relpath" ]
         then
             message "Fixed symlink $pdir -> $target"
