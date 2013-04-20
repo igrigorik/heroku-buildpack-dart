@@ -87,3 +87,6 @@ for filename in `find . -name pubspec.yaml | grep -v dart-sdk | grep -v pub-cach
         message "Fixed symlink $pdir -> $relpath"
     done
 done
+cd $BUILD_DIR
+ls -l `find web -name packages`
+
