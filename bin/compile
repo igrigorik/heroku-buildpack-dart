@@ -84,7 +84,15 @@ for filename in `find . -name pubspec.yaml | grep -v dart-sdk | grep -v pub-cach
     for pdir in `find web -name packages -type l`; do
         relpath=`$BIN_DIR/relpath $pdir $BUILD_DIR/$pub_dir/packages`
         ln -sf $relpath $pdir
-        message "Fixed symlink $pdir -> `readlink $pdir`"
+        target=`readlink $pdir`
+        if [ "$target" = "$relpath" ]
+        then
+            message "Fixed symlink $pdir -> $target"
+        else
+            message "Failed to fix $pdir -> $relpath"
+            message "Link: $pdir -> $target"
+            exit 1
+        fi
     done
 done
 
