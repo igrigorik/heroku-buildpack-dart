@@ -83,7 +83,8 @@ for filename in `find . -name pubspec.yaml | grep -v dart-sdk | grep -v pub-cach
 
     for pdir in `find web -name packages -type l`; do
         relpath=`$BIN_DIR/relpath $pdir $BUILD_DIR/$pub_dir/packages`
-        ln -sf $relpath $pdir
+        rm -f $pdir
+        ln -sfv $relpath $pdir
         target=`readlink $pdir`
         if [ "$target" = "$relpath" ]
         then
