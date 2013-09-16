@@ -12,7 +12,7 @@ main() {
         'Environment': Platform.environment}
       );
       request.response..headers.set(HttpHeaders.CONTENT_TYPE, 'application/json')
-                      ..addString(resp)
+                      ..write(resp)
                       ..close();
     });
   });
