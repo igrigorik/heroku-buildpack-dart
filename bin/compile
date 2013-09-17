@@ -32,7 +32,9 @@ if [ -z "$ARCHIVE" ]; then
     ARCHIVE="http://commondatastorage.googleapis.com/dart-editor-archive-integration"
 fi
 
-DART_SDK_URL="$ARCHIVE/$BUILD/dartsdk-linux-64.tar.gz"
+if [ -z "$DART_SDK_URL" ]; then
+    DART_SDK_URL="$ARCHIVE/$BUILD/dartsdk-linux-64.tar.gz"
+fi
 
 cd $BUILD_DIR
 mkdir -p $PACKAGES_DIR
