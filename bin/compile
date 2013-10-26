@@ -55,8 +55,10 @@ cp -r $CACHE_DIR/dart-sdk $BUILD_DIR
 cp -r $CACHE_DIR/dart-sdk /app
 
 DART_BIN=`ls -l /app/dart-sdk/bin/dart`
+CAN_DART_RUN=`/app/dart-sdk/bin/dart --version`
 
 message "-----> Dart cmd found at $DART_BIN"
+message "-----> Dart reports version: $CAN_DART_RUN"
 
 
 message "-----> Install packages"
