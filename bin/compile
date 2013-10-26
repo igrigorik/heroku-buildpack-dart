@@ -40,7 +40,7 @@ cd $BUILD_DIR
 mkdir -p $PACKAGES_DIR
 
 
-message "-----> Installing Dart VM, build: $BUILD"
+message "-----> Installing Dart VM via URL $DART_SDK_URL"
 
 cd $CACHE_DIR
 curl -L $DART_SDK_URL -s -o - | tar xzf -
