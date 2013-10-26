@@ -43,7 +43,7 @@ mkdir -p $PACKAGES_DIR
 message "-----> Installing Dart VM via URL $DART_SDK_URL"
 
 cd $CACHE_DIR
-curl -L $DART_SDK_URL -s -o - | tar xzf -
+curl -L $DART_SDK_URL -o - | tar xzf -
 
 
 message "-----> Copy Dart binaries to app root"
