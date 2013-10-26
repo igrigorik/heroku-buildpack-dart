@@ -1,1 +1,5 @@
 name: dart_on_heroku_demo
+dependencies:
+  http_server: any
+  route: any
+  path: any
