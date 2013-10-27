@@ -23,6 +23,9 @@ function message {
   sync
 }
 
+MACHINE=`uname -a`
+message "-----> Welcome, this machine is: $MACHINE"
+
 # if no build number is set, download latest
 if [ -z "$BUILD" ]; then
     BUILD="latest"
