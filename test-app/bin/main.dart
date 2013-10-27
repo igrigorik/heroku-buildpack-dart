@@ -26,6 +26,7 @@ main() {
 void sayHi(HttpRequest request) {
   var resp = JSON.encode({
     'Dart on Heroku': true,
+    'Dart version': Platform.version,
     'Buildpack URL': 'https://github.com/igrigorik/heroku-buildpack-dart',
     'Environment': Platform.environment}
   );
