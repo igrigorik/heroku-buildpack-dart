@@ -54,7 +54,7 @@ cp -r $CACHE_DIR/dart-sdk $BUILD_DIR
 # reason being that the /tmp folder will be deleted after build, and /app resembles the location of the ready built app
 cp -r $CACHE_DIR/dart-sdk /app
 
-DART_BIN=`ls -l /app/dart-sdk`
+DART_BIN=`ls -l /app/dart-sdk/bin`
 message "-----> Dart cmd found at $DART_BIN"
 
 CAN_DART_RUN=`/app/dart-sdk/bin/dart --version`
