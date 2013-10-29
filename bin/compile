@@ -74,13 +74,7 @@ for filename in `find . -name pubspec.yaml | grep -v dart-sdk | grep -v pub-cach
     cd $BUILD_DIR/$pub_dir
 
     #start pub from the /app folder to have correct symlink paths
-    /app/dart-sdk/bin/pub install
-
-    if [ -e $BUILD_DIR/$pub_dir/web/packages ]; then
-        cd $BUILD_DIR/$pub_dir/web
-        ln -sf ../packages
-        message "Fixed web symlink"
-    fi
+    /app/dart-sdk/bin/pub get
 done
 
 # move packages from cache directory into build directory
