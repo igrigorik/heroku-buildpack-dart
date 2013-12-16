@@ -1,13 +1,13 @@
-import 'dart:io';
-import 'dart:async';
+import 'dart:io'
+  show Directory, File, HttpHeaders, HttpRequest, HttpServer, Platform;
+import 'dart:async' show runZoned;
 import 'dart:convert' show JSON;
-import 'package:http_server/http_server.dart';
-import 'package:route/server.dart';
+import 'package:route/server.dart' show Router;
 
 main() {
 
-  String portEnv = Platform.environment['PORT'];
-  int port = portEnv == null ? 9999 : int.parse(portEnv);
+  var portEnv = Platform.environment['PORT'];
+  var port = portEnv == null ? 9999 : int.parse(portEnv);
 
   runZoned(() {
     HttpServer.bind('0.0.0.0', port).then((HttpServer server) {
@@ -30,7 +30,8 @@ void sayHi(HttpRequest request) {
     'Buildpack URL': 'https://github.com/igrigorik/heroku-buildpack-dart',
     'Environment': Platform.environment}
   );
-  request.response..headers.set(HttpHeaders.CONTENT_TYPE, 'application/json')
-                  ..write(resp)
-                  ..close();
+  request.response
+    ..headers.set(HttpHeaders.CONTENT_TYPE, 'application/json')
+    ..write(resp)
+    ..close();
 }
