@@ -31,12 +31,9 @@ if [ -z "$BUILD" ]; then
     BUILD="latest"
 fi
 
-if [ -z "$ARCHIVE" ]; then
-    ARCHIVE="http://commondatastorage.googleapis.com/dart-editor-archive-integration"
-fi
-
 if [ -z "$DART_SDK_URL" ]; then
-    DART_SDK_URL="$ARCHIVE/$BUILD/dartsdk-linux-64.tar.gz"
+    message "ERROR: you must specify DART_SDK_URL to a Dart SDK for Linux. See README for this buildpack."
+    exit 1
 fi
 
 cd $BUILD_DIR
@@ -70,7 +67,7 @@ cd $BUILD_DIR
 
 for filename in `find . -name pubspec.yaml | grep -v dart-sdk | grep -v pub-cache`; do
     pub_dir=`dirname $filename`
-    message "*** Found pubspec.yaml in $pub_dir"
+    message "*** Found pubspec.yaml in $BUILD_DIR/$pub_dir"
     cd $BUILD_DIR/$pub_dir
 
     #start pub from the /app folder to have correct symlink paths
