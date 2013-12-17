@@ -23,11 +23,6 @@ function message {
 MACHINE=`uname -a`
 message "-----> Welcome, this machine is: $MACHINE"
 
-# if no build number is set, download latest
-if [ -z "$BUILD" ]; then
-    BUILD="latest"
-fi
-
 if [ -z "$DART_SDK_URL" ]; then
     message "ERROR: you must specify DART_SDK_URL to a Dart SDK for Linux. See README for this buildpack."
     exit 1
@@ -40,13 +35,13 @@ message "-----> Installing Dart VM via URL $DART_SDK_URL"
 cd $CACHE_DIR
 curl -L $DART_SDK_URL -o - | tar xzf -
 
-
 message "-----> Copy Dart binaries to app root"
-
 cp -r $CACHE_DIR/dart-sdk $BUILD_DIR
 
-# we need to copy the sdk into the /app folder in order for the sdk libraries to be referenced correctly
-# reason being that the /tmp folder will be deleted after build, and /app resembles the location of the ready built app
+# we need to copy the sdk into the /app folder in order for the sdk libraries
+# to be referenced correctly
+# reason being that the /tmp folder will be deleted after build, and /app
+# resembles the location of the ready built app
 cp -r $CACHE_DIR/dart-sdk /app
 
 DART_BIN=`ls -l /app/dart-sdk/bin/dart`
@@ -54,7 +49,6 @@ message "-----> Dart cmd found at $DART_BIN"
 
 CAN_DART_RUN=`/app/dart-sdk/bin/dart --version`
 message "-----> Dart reports version: $CAN_DART_RUN"
-
 
 message "-----> Install packages"
 
@@ -71,6 +65,9 @@ for filename in `find . -name pubspec.yaml | grep -v dart-sdk | grep -v pub-cach
     listing=`ls -l $PUB_CACHE`
     message "------> $listing"
 done
+
+cp -R $PUB_CACHE $BUILD_DIR/pub-cache
+message `ls -l $BUILD_DIR/pub-cache`
 
 # run Dart build script
 cd $BUILD_DIR
