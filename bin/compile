@@ -66,6 +66,9 @@ for filename in `find . -name pubspec.yaml | grep -v dart-sdk | grep -v pub-cach
     message "------> $listing"
 done
 
+# I think heroku deletes all the contents of /app and replaces it with
+# whatever is in $BUILD_DIR, so copy over the pub-cache. Why not put it in
+# $BUILD_DIR in the first place? because we need symlinks setup correctly.
 cp -R $PUB_CACHE $BUILD_DIR/pub-cache
 message `ls -l $BUILD_DIR/pub-cache`
 
