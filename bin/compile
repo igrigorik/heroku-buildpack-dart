@@ -10,11 +10,8 @@ mkdir -p "$1" "$2"
 BUILD_DIR=$(cd "$1/" && pwd)
 CACHE_DIR=$(cd "$2/" && pwd)
 
-# the directory in which the packages will be stored
-PACKAGES_DIR="tmp/repo.git/.cache"
-
 # this variable is used by pub to determine the package install location
-PUB_CACHE="$CACHE_DIR/pub-cache"
+PUB_CACHE="/app/pub-cache"
 export PUB_CACHE
 mkdir -p $PUB_CACHE
 
@@ -37,8 +34,6 @@ if [ -z "$DART_SDK_URL" ]; then
 fi
 
 cd $BUILD_DIR
-mkdir -p $PACKAGES_DIR
-
 
 message "-----> Installing Dart VM via URL $DART_SDK_URL"
 
@@ -73,10 +68,6 @@ for filename in `find . -name pubspec.yaml | grep -v dart-sdk | grep -v pub-cach
     #start pub from the /app folder to have correct symlink paths
     /app/dart-sdk/bin/pub get
 done
-
-# move packages from cache directory into build directory
-cd $CACHE_DIR
-cp -r $CACHE_DIR/pub-cache $BUILD_DIR/$PACKAGES_DIR
 
 # run Dart build script
 cd $BUILD_DIR
