@@ -1,9 +1,13 @@
 import 'dart:io' show File, HttpServer, Platform;
 import 'dart:async' show runZoned;
 import 'package:http_server/http_server.dart' show VirtualDirectory;
+import 'package:path/path.dart' show join, dirname;
 
 void main() {
-  var staticFiles = new VirtualDirectory('../build');
+  // Assumes the server lives in bin/ and that `pub build` ran
+  var pathToBuild = join(dirname(Platform.script.toFilePath()), '..', 'build');
+
+  var staticFiles = new VirtualDirectory(pathToBuild);
   staticFiles.allowDirectoryListing = true;
   staticFiles.directoryHandler = (dir, request) {
     // Redirect directory-requests to index.html files.
