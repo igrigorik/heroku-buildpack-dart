@@ -69,7 +69,7 @@ for filename in `find . -name pubspec.yaml | grep -v dart-sdk | grep -v pub-cach
         echo 'Use the default command: "pub build"'
         /app/dart-sdk/bin/pub build
     else
-        echo 'Use custom command: "$DART_BUILD_CMD"'
+        echo "Use custom command: \"$DART_BUILD_CMD\""
         eval $DART_BUILD_CMD
     fi
 
