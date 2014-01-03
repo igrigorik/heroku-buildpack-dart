@@ -64,7 +64,15 @@ for filename in `find . -name pubspec.yaml | grep -v dart-sdk | grep -v pub-cach
 
     message "*** Running pub build"
 
-    /app/dart-sdk/bin/pub build
+    if [[ -z "$DART_BUILD_CMD" ]]
+    then
+        echo 'Use the default command: "pub build"'
+        /app/dart-sdk/bin/pub build
+    else
+        echo 'Use custom command: "$DART_BUILD_CMD"'
+        eval $DART_BUILD_CMD
+    fi
+
 done
 
 # I think heroku deletes all the contents of /app and replaces it with
