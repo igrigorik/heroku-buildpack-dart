@@ -11,7 +11,9 @@ This is a Heroku buildpack for [Dart][].
 *NOTE*: The current official builds of Dart SDK do not support Heroku, due to
 mismatched glibc versions. You need to provide your own .tar.gz of Dart SDK,
 compiled for Ubuntu 10.04 (Heroku's Cedar stack). Get
-[instructions for building Dart for Ubuntu 10.04][buildforubuntu].
+[instructions for building Dart for Ubuntu 10.04][buildforubuntu] or
+you can try using an (unsupported)
+[community build of Dart for Ubuntu 10.04][communitybuilds].
 
 ## Getting Started
 
@@ -153,3 +155,4 @@ The MIT License - Copyright (c) 2012 Ilya Grigorik
 [deploy]: https://devcenter.heroku.com/articles/git
 [envcompile]: https://devcenter.heroku.com/articles/labs-user-env-compile
 [buildforubuntu]: https://code.google.com/p/dart/wiki/BuildDartSDKOnUbuntu10_04
+[communitybuild]: https://github.com/selkhateeb/heroku-vagrant-dart-build/releases
