@@ -69,7 +69,6 @@ for filename in `find . -name pubspec.yaml | grep -v dart-sdk | grep -v pub-cach
         message 'Building with "pub build"'
         /app/dart-sdk/bin/pub build
     else
-        message "Use custom command"
         message "Building with \"$DART_BUILD_CMD\""
         eval $DART_BUILD_CMD
     fi
