@@ -155,4 +155,4 @@ The MIT License - Copyright (c) 2012 Ilya Grigorik
 [deploy]: https://devcenter.heroku.com/articles/git
 [envcompile]: https://devcenter.heroku.com/articles/labs-user-env-compile
 [buildforubuntu]: https://code.google.com/p/dart/wiki/BuildDartSDKOnUbuntu10_04
-[communitybuild]: https://github.com/selkhateeb/heroku-vagrant-dart-build/releases
+[communitybuilds]: https://github.com/selkhateeb/heroku-vagrant-dart-build/releases
