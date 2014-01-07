@@ -34,10 +34,6 @@ $> git init
 $> git add -A .
 $> git commit -am "first commit"
 $> heroku create myfirstdartappforheroku -s cedar
-<<<<<<< HEAD
-$> heroku ps:scale	web=1
-=======
->>>>>>> upstream/master
 $> heroku labs:enable user-env-compile
 $> heroku config:set DART_SDK_URL=<archive url>
 $> heroku config:add BUILDPACK_URL=https://github.com/igrigorik/heroku-buildpack-dart.git
@@ -89,18 +85,12 @@ total
 
 -----> Compressing... done, 10.5MB
 -----> Launching... done, v6
-<<<<<<< HEAD
-       http://myfirstdartapp2.herokuapp.com deployed to Heroku
-=======
        http://myfirstdartappforheroku.herokuapp.com deployed to Heroku
->>>>>>> upstream/master
 
 To git@heroku.com:myfirstdartapp2.git
  * [new branch]      master -> master
 ```
 
-<<<<<<< HEAD
-=======
 Scale to one web dyno (aka server):
 
 ```bash
@@ -109,7 +99,6 @@ $> heroku ps:scale  web=1
 
 Test your app! The URL is printed at the end of the `git push` step.
 
->>>>>>> upstream/master
 ## Configuration
 
 ### Enable ENV Variables
@@ -127,7 +116,6 @@ More info on that can be found in
 
 You must specify a URL that points to a .tar.gz file of the Dart SDK. The SDK
 must be built for a Ubuntu 10.04 environment.
-<<<<<<< HEAD
 
 ```bash
 $> heroku config:set DART_SDK_URL=<archive url>
@@ -137,17 +125,6 @@ There are [instructions for building Dart SDK for Ubuntu 10.04][buildforubuntu].
 
 ### Specifying the script
 
-=======
-
-```bash
-$> heroku config:set DART_SDK_URL=<archive url>
-```
-
-There are [instructions for building Dart SDK for Ubuntu 10.04][buildforubuntu].
-
-### Specifying the script
-
->>>>>>> upstream/master
 The `Procfile` defines the file to run when the application starts. We
 recommend to put the server script into your application's `bin/` directory.
 
@@ -155,7 +132,6 @@ The sample app's `Procfile` looks like:
 
 ```
 web: ./dart-sdk/bin/dart bin/basic_http_server.dart
-<<<<<<< HEAD
 ```
 
 ### Overriding  the build command
@@ -166,8 +142,6 @@ another command: for instance `pub build --mode=debug` or
 
 ```bash
 $> heroku config:set DART_BUILD_CMD="/app/dart-sdk/bin/dart build.dart"
-=======
->>>>>>> upstream/master
 ```
 
 Learn more about 
@@ -198,7 +172,4 @@ The MIT License - Copyright (c) 2012 Ilya Grigorik
 [deploy]: https://devcenter.heroku.com/articles/git
 [envcompile]: https://devcenter.heroku.com/articles/labs-user-env-compile
 [buildforubuntu]: https://code.google.com/p/dart/wiki/BuildDartSDKOnUbuntu10_04
-<<<<<<< HEAD
-=======
 [communitybuilds]: https://github.com/selkhateeb/heroku-vagrant-dart-build/releases
->>>>>>> upstream/master
