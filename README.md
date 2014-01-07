@@ -34,7 +34,6 @@ $> git init
 $> git add -A .
 $> git commit -am "first commit"
 $> heroku create myfirstdartappforheroku -s cedar
-$> heroku ps:scale	web=1
 $> heroku labs:enable user-env-compile
 $> heroku config:set DART_SDK_URL=<archive url>
 $> heroku config:add BUILDPACK_URL=https://github.com/igrigorik/heroku-buildpack-dart.git
@@ -86,11 +85,19 @@ total
 
 -----> Compressing... done, 10.5MB
 -----> Launching... done, v6
-       http://myfirstdartapp2.herokuapp.com deployed to Heroku
+       http://myfirstdartappforheroku.herokuapp.com deployed to Heroku
 
 To git@heroku.com:myfirstdartapp2.git
  * [new branch]      master -> master
 ```
+
+Scale to one web dyno (aka server):
+
+```bash
+$> heroku ps:scale  web=1
+```
+
+Test your app! The URL is printed at the end of the `git push` step.
 
 ## Configuration
 
