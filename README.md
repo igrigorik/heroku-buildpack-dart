@@ -134,6 +134,16 @@ The sample app's `Procfile` looks like:
 web: ./dart-sdk/bin/dart bin/basic_http_server.dart
 ```
 
+### Overriding  the build command
+
+By default `pub build` is launched after the `pub get`, it can be useful to use
+another command: for instance `pub build --mode=debug` or 
+`/app/dart-sdk/bin/dart build.dart`:
+
+```bash
+$> heroku config:set DART_BUILD_CMD="/app/dart-sdk/bin/dart build.dart"
+```
+
 Learn more about 
 
 ## Example 

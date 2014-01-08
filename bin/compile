@@ -64,7 +64,15 @@ for filename in `find . -name pubspec.yaml | grep -v dart-sdk | grep -v pub-cach
 
     message "*** Running pub build"
 
-    /app/dart-sdk/bin/pub build
+    if [[ -z "$DART_BUILD_CMD" ]]
+    then
+        message 'Building with "pub build"'
+        /app/dart-sdk/bin/pub build
+    else
+        message "Building with \"$DART_BUILD_CMD\""
+        eval $DART_BUILD_CMD
+    fi
+
 done
 
 # I think heroku deletes all the contents of /app and replaces it with
@@ -72,4 +80,3 @@ done
 # $BUILD_DIR in the first place? because we need symlinks setup correctly.
 cp -R $PUB_CACHE $BUILD_DIR/pub-cache
 message `ls -l $BUILD_DIR/pub-cache`
-
