@@ -1,10 +1,27 @@
 #!/usr/bin/env bash
-# bin/compile <build-dir> <cache-dir>
+# bin/compile <build-dir> <cache-dir> <env-dir>
 
 # fail fast
 set -e
 #set -x
 unset GIT_DIR
+
+# Heroku stopped using the user-env-compile labs feature,
+# so let's use the new ENV_DIR feature.
+# Learn more here: https://devcenter.heroku.com/articles/buildpack-api
+
+export_env_dir() {
+  env_dir=$1
+  whitelist_regex=${2:-''}
+  blacklist_regex=${3:-'^(PATH|GIT_DIR|CPATH|CPPATH|LD_PRELOAD|LIBRARY_PATH)$'}
+  if [ -d "$env_dir" ]; then
+    for e in $(ls $env_dir); do
+      echo "$e" | grep -E "$whitelist_regex" | grep -qvE "$blacklist_regex" &&
+      export "$e=$(cat $env_dir/$e)"
+      :
+    done
+  fi
+}
 
 mkdir -p "$1" "$2"
 BUILD_DIR=$(cd "$1/" && pwd)
