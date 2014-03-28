@@ -12,6 +12,7 @@ unset GIT_DIR
 
 export_env_dir() {
   env_dir=$1
+  message "-----> ENV_DIR is $env_dir"
   whitelist_regex=${2:-''}
   blacklist_regex=${3:-'^(PATH|GIT_DIR|CPATH|CPPATH|LD_PRELOAD|LIBRARY_PATH)$'}
   if [ -d "$env_dir" ]; then
