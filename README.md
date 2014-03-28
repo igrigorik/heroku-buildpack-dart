@@ -101,17 +101,6 @@ Test your app! The URL is printed at the end of the `git push` step.
 
 ## Configuration
 
-### Enable ENV Variables
-
-You must tell Heroku to pass environment variables through to your app.
-
-```bash
-$> heroku labs:enable user-env-compile
-```
-
-More info on that can be found in
-[Heroku's Devcenter: Heroku Labs: user-env-compile][envcompile].
-
 ### Location of Dart SDK
 
 You must specify a URL that points to a .tar.gz file of the Dart SDK. The SDK
