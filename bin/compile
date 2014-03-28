@@ -6,6 +6,11 @@ set -e
 #set -x
 unset GIT_DIR
 
+function message {
+  echo "$1"
+  sync
+}
+
 # Heroku stopped using the user-env-compile labs feature,
 # so let's use the new ENV_DIR feature.
 # Learn more here: https://devcenter.heroku.com/articles/buildpack-api
@@ -35,11 +40,6 @@ CACHE_DIR=$(cd "$2/" && pwd)
 PUB_CACHE="/app/pub-cache"
 export PUB_CACHE
 mkdir -p $PUB_CACHE
-
-function message {
-  echo "$1"
-  sync
-}
 
 MACHINE=`uname -a`
 message "-----> Welcome, this machine is: $MACHINE"
