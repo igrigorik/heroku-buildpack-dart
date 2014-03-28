@@ -30,7 +30,7 @@ export_env_dir() {
   fi
 }
 
-export_env_dir
+export_env_dir "$3"
 
 mkdir -p "$1" "$2"
 BUILD_DIR=$(cd "$1/" && pwd)
