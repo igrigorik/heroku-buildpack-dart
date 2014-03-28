@@ -23,6 +23,8 @@ export_env_dir() {
   fi
 }
 
+export_env_dir
+
 mkdir -p "$1" "$2"
 BUILD_DIR=$(cd "$1/" && pwd)
 CACHE_DIR=$(cd "$2/" && pwd)

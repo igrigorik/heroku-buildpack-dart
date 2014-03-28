@@ -34,7 +34,6 @@ $> git init
 $> git add -A .
 $> git commit -am "first commit"
 $> heroku create myfirstdartappforheroku -s cedar
-$> heroku labs:enable user-env-compile
 $> heroku config:set DART_SDK_URL=<archive url>
 $> heroku config:add BUILDPACK_URL=https://github.com/igrigorik/heroku-buildpack-dart.git
 ```
