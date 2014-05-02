@@ -83,7 +83,7 @@ for filename in `find . -name pubspec.yaml | grep -v dart-sdk | grep -v pub-cach
     /app/dart-sdk/bin/pub --version
 
     #start pub from the /app folder to have correct symlink paths
-    /app/dart-sdk/bin/pub upgrade -v
+    /app/dart-sdk/bin/pub get
 
     message "*** Running pub build"
 
