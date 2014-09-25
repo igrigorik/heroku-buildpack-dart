@@ -11,10 +11,7 @@ function message {
   sync
 }
 
-# Heroku stopped using the user-env-compile labs feature,
-# so let's use the new ENV_DIR feature.
-# Learn more here: https://devcenter.heroku.com/articles/buildpack-api
-
+# https://devcenter.heroku.com/articles/buildpack-api
 export_env_dir() {
   env_dir=$1
   message "-----> ENV_DIR is $env_dir"
@@ -54,7 +51,24 @@ cd $BUILD_DIR
 message "-----> Installing Dart VM via URL $DART_SDK_URL"
 
 cd $CACHE_DIR
-curl -L $DART_SDK_URL -o - | tar xzf -
+
+case "${DART_SDK_URL: -3}" in
+  tar)
+    message "SDK: tarball detected"
+    curl -L -k $DART_SDK_URL -o - | tar xzf -
+    ;;
+  zip)
+    message "SDK: zip detected"
+    curl -L -k $DART_SDK_URL > dart-sdk.zip ; unzip -o -q dart-sdk.zip
+    ;;
+  deb)
+    message "SDK: deb detected"
+    curl -L -k $DART_SDK_URL > dart-sdk.deb ; ar vx dart-sdk.deb ; tar xzf data.tar.gz
+    ;;
+  *)
+    message "Invalid Dart SDK URL" #kill after this or keep going in case SDK is there from last push?
+    ;;
+esac
 
 message "-----> Copy Dart binaries to app root"
 cp -r $CACHE_DIR/dart-sdk $BUILD_DIR
