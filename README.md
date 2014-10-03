@@ -1,6 +1,7 @@
 # Heroku Buildpack: Dart
 
-This is a Heroku buildpack for [Dart][].
+This is a Heroku buildpack for [Dart][]. **This buildpack requires that you use the [Cedar-14](https://devcenter.heroku.com/articles/cedar-14-migration) (Ubuntu 14.x-based) 
+stack for your Heroku application.**
 
 ## Features
 
@@ -8,12 +9,7 @@ This is a Heroku buildpack for [Dart][].
 * Installs packages with [pub][]
 * Builds the client app with [pub build][build]
 
-*NOTE*: The current official builds of Dart SDK do not support Heroku, due to
-mismatched glibc versions. You need to provide your own .tar.gz of Dart SDK,
-compiled for Ubuntu 10.04 (Heroku's Cedar stack). Get
-[instructions for building Dart for Ubuntu 10.04][buildforubuntu] or
-you can try using an (unsupported)
-[community build of Dart for Ubuntu 10.04][communitybuilds].
+*NOTE*: This buildpack only supports Heroku applications that are running on the Cedar-14 stack. If your application is running on Cedar-10, you must first migrate to the new stack. More information on that [here](https://devcenter.heroku.com/articles/cedar-14-migration). The Cedar-10 stack on Heroku does not support the Dart SDK by default due to mismatched glibc versions. If you must remain on the Cedar-10 stack you need to provide your own .tar.gz of Dart SDK compiled for Ubuntu 10.04 (Heroku's Cedar stack). Get [instructions for building Dart for Ubuntu 10.04][buildforubuntu] or you can try using an (unsupported) [community build of Dart for Ubuntu 10.04][communitybuilds].
 
 ## Getting Started
 
@@ -22,8 +18,10 @@ you can try using an (unsupported)
 [git](http://git-scm.com/) installed, and that you have a heroku
 account.)
 
-Create a Heroku app with the _cedar_ stack, specify both this
-buildpack and a URL to a Dart SDK compiled for Ubuntu 10.04.
+Create a Heroku app with the _cedar-14_ stack, specify both this buildpack and a URL to a Dart SDK.
+
+The buildpack currently supports SDKs that are compiled to .zip or .tar. You can always find the latest (stable and unstable) 
+builds of the SDK [here](https://www.dartlang.org/tools/download_archive/). Be sure to grab the direct URL (.zip) for Linux for the following step.
 
 ```bash
 $> git clone https://github.com/igrigorik/heroku-buildpack-dart.git
