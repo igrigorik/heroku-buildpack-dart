@@ -1,28 +1,23 @@
-import 'dart:io' show File, HttpServer, Platform;
+import 'dart:io' show Platform;
 import 'dart:async' show runZoned;
-import 'package:http_server/http_server.dart' show VirtualDirectory;
 import 'package:path/path.dart' show join, dirname;
+import 'package:shelf/shelf_io.dart' as io;
+import 'package:shelf_static/shelf_static.dart';
 
 void main() {
   // Assumes the server lives in bin/ and that `pub build` ran
   var pathToBuild = join(dirname(Platform.script.toFilePath()),
       '..', 'build/web');
 
-  var staticFiles = new VirtualDirectory(pathToBuild);
-  staticFiles.allowDirectoryListing = true;
-  staticFiles.directoryHandler = (dir, request) {
-    // Redirect directory-requests to index.html files.
-    var indexUri = new Uri.file(dir.path).resolve('index.html');
-    staticFiles.serveFile(new File(indexUri.toFilePath()), request);
-  };
+  var handler = createStaticHandler(pathToBuild,
+      defaultDocument: 'index.html');
 
   var portEnv = Platform.environment['PORT'];
   var port = portEnv == null ? 9999 : int.parse(portEnv);
 
   runZoned(() {
-    HttpServer.bind('0.0.0.0', port).then((server) {
-      server.listen(staticFiles.serveRequest);
-    });
+    io.serve(handler, '0.0.0.0', port);
+    print("Serving $pathToBuild on port $port");
   },
   onError: (e, stackTrace) => print('Oh noes! $e $stackTrace'));
 }
