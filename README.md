@@ -1,15 +1,31 @@
 # Heroku Buildpack: Dart
 
-This is a Heroku buildpack for [Dart][]. **This buildpack requires that you use the [Cedar-14](https://devcenter.heroku.com/articles/cedar-14-migration) (Ubuntu 14.x-based) 
-stack for your Heroku application.**
+This is a Heroku buildpack for [Dart][].
+
+This buildpack requires that you use the
+[Cedar-14][cedar14] (Ubuntu 14.x-based) stack for your Heroku application.
+If your Heroku app runs on previous versions of Cedar, see below for more info.
 
 ## Features
 
 * Runs Dart VM as a server in Heroku's cloud
 * Installs packages with [pub][]
 * Builds the client app with [pub build][build]
+* Cedar 14 (Ubuntu 14) required
 
-*NOTE*: This buildpack only supports Heroku applications that are running on the Cedar-14 stack. If your application is running on Cedar-10, you must first migrate to the new stack. More information on that [here](https://devcenter.heroku.com/articles/cedar-14-migration). The Cedar-10 stack on Heroku does not support the Dart SDK by default due to mismatched glibc versions. If you must remain on the Cedar-10 stack you need to provide your own .tar.gz of Dart SDK compiled for Ubuntu 10.04 (Heroku's Cedar stack). Get [instructions for building Dart for Ubuntu 10.04][buildforubuntu] or you can try using an (unsupported) [community build of Dart for Ubuntu 10.04][communitybuilds].
+
+## Running on Cedar-10 ?
+
+This buildpack only supports Heroku applications that are running on the
+Cedar-14 stack. If your application is running on Cedar-10, you must first
+[migrate to Cedar-14][cedar14].
+
+The Cedar-10 stack
+on Heroku does not support the Dart SDK by default due to mismatched glibc versions.
+If you must remain on the Cedar-10 stack, you need to provide your own .tar.gz of Dart
+SDK compiled for Ubuntu 10.04 (Heroku's Cedar stack). Get
+[instructions for building Dart for Ubuntu 10.04][buildforubuntu] or you can try
+using an (unsupported) [community build of Dart for Ubuntu 10.04][communitybuilds].
 
 ## Getting Started
 
@@ -18,10 +34,10 @@ stack for your Heroku application.**
 [git](http://git-scm.com/) installed, and that you have a heroku
 account.)
 
-Create a Heroku app with the _cedar-14_ stack, specify both this buildpack and a URL to a Dart SDK.
+Create a Heroku app with the _cedar-14_ stack, specify both this buildpack and a
+URL to a Dart SDK.
 
-The buildpack currently supports SDKs that are compiled to .zip or .tar. You can always find the latest (stable and unstable) 
-builds of the SDK [here](https://www.dartlang.org/tools/download_archive/). Be sure to grab the direct URL (.zip) for Linux for the following step.
+The buildpack currently supports SDKs that are compiled to .zip or .tar.
 
 ```bash
 $> git clone https://github.com/igrigorik/heroku-buildpack-dart.git
@@ -31,7 +47,7 @@ $> cd myfirstdartappforheroku
 $> git init
 $> git add -A .
 $> git commit -am "first commit"
-$> heroku create myfirstdartappforheroku -s cedar
+$> heroku create myfirstdartappforheroku -s cedar-14
 $> heroku config:set DART_SDK_URL=<archive url>
 $> heroku config:add BUILDPACK_URL=https://github.com/igrigorik/heroku-buildpack-dart.git
 ```
@@ -91,7 +107,7 @@ To git@heroku.com:myfirstdartapp2.git
 Scale to one web dyno (aka server):
 
 ```bash
-$> heroku ps:scale  web=1
+$> heroku ps:scale web=1
 ```
 
 Test your app! The URL is printed at the end of the `git push` step.
@@ -100,14 +116,15 @@ Test your app! The URL is printed at the end of the `git push` step.
 
 ### Location of Dart SDK
 
-You must specify a URL that points to a .tar.gz file of the Dart SDK. The SDK
-must be built for a Ubuntu 10.04 environment.
+You must specify a URL that points to a .zip that contains the Dart SDK.
+Links to Dart SDKs built for Linux are [available][download].
 
 ```bash
 $> heroku config:set DART_SDK_URL=<archive url>
 ```
 
-There are [instructions for building Dart SDK for Ubuntu 10.04][buildforubuntu].
+If you are still running on Cedar-10, you will need to build your own Dart SDK
+using the [instructions for building Dart SDK for Ubuntu 10.04][buildforubuntu].
 
 ### Specifying the script
 
@@ -120,9 +137,9 @@ The sample app's `Procfile` looks like:
 web: ./dart-sdk/bin/dart bin/basic_http_server.dart
 ```
 
-### Overriding  the build command
+### Overriding the build command
 
-By default `pub build` is launched after the `pub get`, it can be useful to use
+By default `pub build` is launched after `pub get`, it can be useful to use
 another command: for instance `pub build --mode=debug` or 
 `/app/dart-sdk/bin/dart build.dart`:
 
@@ -130,12 +147,10 @@ another command: for instance `pub build --mode=debug` or
 $> heroku config:set DART_BUILD_CMD="/app/dart-sdk/bin/dart build.dart"
 ```
 
-Learn more about 
-
 ## Example 
 
 See `test-app` directory for the world simplest Dart web app running on
-Heroku: [dartvm.herokuapp.com](http://dartvm.herokuapp.com/)
+Heroku.
 
 ## Learning more
 
@@ -159,3 +174,5 @@ The MIT License - Copyright (c) 2012 Ilya Grigorik
 [envcompile]: https://devcenter.heroku.com/articles/labs-user-env-compile
 [buildforubuntu]: https://code.google.com/p/dart/wiki/BuildDartSDKOnUbuntu10_04
 [communitybuilds]: https://github.com/selkhateeb/heroku-vagrant-dart-build/releases
+[cedar14]: https://devcenter.heroku.com/articles/cedar-14-migration
+[download]: https://www.dartlang.org/tools/download_archive/
