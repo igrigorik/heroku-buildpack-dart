@@ -17,13 +17,16 @@ If your Heroku app runs on previous versions of Cedar, see below for more info.
 ## Running on Cedar-10 ?
 
 This buildpack only supports Heroku applications that are running on the
-Cedar-14 stack. If your application is running on Cedar-10, you must first
+Cedar-14 stack. If your application is running on Cedar-10, you should first
 [migrate to Cedar-14][cedar14].
 
-The Cedar-10 stack
-on Heroku does not support the Dart SDK by default due to mismatched glibc versions.
-If you must remain on the Cedar-10 stack, you need to provide your own .tar.gz of Dart
-SDK compiled for Ubuntu 10.04 (Heroku's Cedar stack). Get
+This buildpack should work with Cedar-10, but the developers of this
+buildpack do not support Cedar-10.
+
+The Cedar-10 stack on Heroku does not support the Dart SDK by default due
+to mismatched glibc versions. If you must remain on the Cedar-10 stack, you
+need to provide your own .tar.gz of Dart SDK compiled for Ubuntu 10.04
+(Heroku's Cedar stack). Get
 [instructions for building Dart for Ubuntu 10.04][buildforubuntu] or you can try
 using an (unsupported) [community build of Dart for Ubuntu 10.04][communitybuilds].
 
@@ -35,9 +38,10 @@ using an (unsupported) [community build of Dart for Ubuntu 10.04][communitybuild
 account.)
 
 Create a Heroku app with the _cedar-14_ stack, specify both this buildpack and a
-URL to a Dart SDK.
+[URL that points to a compiled Dart SDK][download].
 
-The buildpack currently supports SDKs that are compiled to .zip or .tar.
+Here is a set of commands that deploys a minimal HTTP server built with Dart
+to Heroku:
 
 ```bash
 $> git clone https://github.com/igrigorik/heroku-buildpack-dart.git
@@ -104,7 +108,7 @@ To git@heroku.com:myfirstdartapp2.git
  * [new branch]      master -> master
 ```
 
-Scale to one web dyno (aka server):
+You may need to scale to one web dyno (aka server):
 
 ```bash
 $> heroku ps:scale web=1
