@@ -59,7 +59,7 @@ case "${DART_SDK_URL: -3}" in
     ;;
   zip)
     message "SDK: zip detected"
-    curl -L -k $DART_SDK_URL > dart-sdk.zip ; unzip -o -q dart-sdk.zip ; mv dart/dart-sdk dart-sdk
+    curl -L -k $DART_SDK_URL > dart-sdk.zip ; unzip -o -q dart-sdk.zip ; rm -rf dart-sdk ; mv dart/dart-sdk dart-sdk
     ;;
   deb)
     message "SDK: deb detected"
