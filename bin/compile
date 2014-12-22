@@ -59,7 +59,15 @@ case "${DART_SDK_URL: -3}" in
     ;;
   zip)
     message "SDK: zip detected"
-    curl -L -k $DART_SDK_URL > dart-sdk.zip ; unzip -o -q dart-sdk.zip ; rm -rf dart-sdk ; mv dart/dart-sdk dart-sdk
+    curl -L -k $DART_SDK_URL > dart-sdk.zip
+    rm -rf dart
+    rm -rf dart-sdk
+    unzip -o -q dart-sdk.zip
+    if [ -d "dart" ]; then
+      # If for some reason you used the full Dart Editor zip
+      # we only need the dart-sdk directory
+      mv dart/dart-sdk $CACHE_DIR
+    fi
     ;;
   deb)
     message "SDK: deb detected"
@@ -67,7 +75,8 @@ case "${DART_SDK_URL: -3}" in
     message "Please use the .zip Dart SDK"
     ;;
   *)
-    message "Invalid Dart SDK URL" #kill after this or keep going in case SDK is there from last push?
+    message "Invalid Dart SDK URL"
+    # kill after this or keep going in case SDK is there from last push?
     ;;
 esac
 
