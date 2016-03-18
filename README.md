@@ -2,33 +2,15 @@
 
 This is a Heroku buildpack for [Dart][].
 
-This buildpack requires that you use the
+(Note: This buildpack requires that you use the
 [Cedar-14][cedar14] (Ubuntu 14.x-based) stack for your Heroku application.
-If your Heroku app runs on previous versions of Cedar, see below for more info.
+This is now the default stack on Heroku.)
 
 ## Features
 
 * Runs Dart VM as a server in Heroku's cloud
 * Installs packages with [pub][]
 * Builds the client app with [pub build][build]
-* Cedar 14 (Ubuntu 14) required
-
-
-## Running on Cedar-10 ?
-
-This buildpack only supports Heroku applications that are running on the
-Cedar-14 stack. If your application is running on Cedar-10, you should first
-[migrate to Cedar-14][cedar14].
-
-This buildpack should work with Cedar-10, but the developers of this
-buildpack do not support Cedar-10.
-
-The Cedar-10 stack on Heroku does not support the Dart SDK by default due
-to mismatched glibc versions. If you must remain on the Cedar-10 stack, you
-need to provide your own .tar.gz of Dart SDK compiled for Ubuntu 10.04
-(Heroku's Cedar stack). Get
-[instructions for building Dart for Ubuntu 10.04][buildforubuntu] or you can try
-using an (unsupported) [community build of Dart for Ubuntu 10.04][communitybuilds].
 
 ## Getting Started
 
@@ -37,7 +19,7 @@ using an (unsupported) [community build of Dart for Ubuntu 10.04][communitybuild
 [git](http://git-scm.com/) installed, and that you have a heroku
 account.)
 
-Create a Heroku app with the _cedar-14_ stack, specify both this buildpack and a
+Create a Heroku app, and specify both this buildpack and a
 [URL that points to a compiled Dart SDK][download].
 
 Here is a set of commands that deploys a minimal HTTP server built with Dart
@@ -51,7 +33,7 @@ $> cd myfirstdartappforheroku
 $> git init
 $> git add -A .
 $> git commit -am "first commit"
-$> heroku create myfirstdartappforheroku -s cedar-14
+$> heroku create myfirstdartappforheroku
 $> heroku config:set DART_SDK_URL=<archive url>
 $> heroku config:add BUILDPACK_URL=https://github.com/igrigorik/heroku-buildpack-dart.git
 ```
@@ -60,52 +42,6 @@ Push the app to Heroku. Learn more about [deploying to Heroku with git][deploy].
 
 ```bash
 $> git push heroku master
-```
-
-Example output from a `git push`:
-
-```bash
-Initializing repository, done.
-Counting objects: 11, done.
-Delta compression using up to 8 threads.
-Compressing objects: 100% (11/11), done.
-Writing objects: 100% (11/11), 2.27 KiB | 0 bytes/s, done.
-Total 11 (delta 0), reused 0 (delta 0)
-
------> Fetching custom git buildpack... done
------> Dart app detected
------> Welcome, this machine is: Linux 4d4ac1e0-412c-4734-9a68-0e0002f669cf 3.8.11-ec2 #1 SMP Fri May 3 09:11:15 UTC 2013 x86_64 GNU/Linux
------> Installing Dart VM via URL https://www.dropbox.com/s/y1eq2rkc8j7nyek/dart-sdk-v1.1.0-dev.4.0.tar.gz
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-100 10.3M  100 10.3M    0     0  5822k      0  0:00:01  0:00:01 --:--:-- 13.4M
------> Copy Dart binaries to app root
------> Dart cmd found at -rwx------ 1 u13180 13180 10064032 Dec 22 19:23 /app/dart-sdk/bin/dart
-Dart VM version: 1.1.0-dev.4.0 (Mon Dec 16 12:29:42 2013) on "linux_x64"
------> Dart reports version: 
-*** Found pubspec.yaml in /tmp/build_c4247abc-3094-495f-870d-4e72fe1f1f36/.
-*** Running pub get
-Resolving dependencies.......
-Downloading browser 0.9.0...
-Downloading http_server 0.9.1...
-Downloading mime 0.9.0...
-Downloading path 1.0.0...
-Got dependencies!
-*** Running pub build
-Building basic_http_server.......
-[Info in Dart2JS]:
-Took 0:00:06.587561 to compile basic_http_server|web/index.dart.
-Built 8 files!
-total
------> Discovering process types
-       Procfile declares types -> (none)
-
------> Compressing... done, 10.5MB
------> Launching... done, v6
-       http://myfirstdartappforheroku.herokuapp.com deployed to Heroku
-
-To git@heroku.com:myfirstdartapp2.git
- * [new branch]      master -> master
 ```
 
 You may need to scale to one web dyno (aka server):
@@ -126,9 +62,6 @@ Links to Dart SDKs built for Linux are [available][download].
 ```bash
 $> heroku config:set DART_SDK_URL=<archive url>
 ```
-
-If you are still running on Cedar-10, you will need to build your own Dart SDK
-using the [instructions for building Dart SDK for Ubuntu 10.04][buildforubuntu].
 
 ### Specifying the script
 
