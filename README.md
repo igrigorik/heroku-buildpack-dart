@@ -112,4 +112,4 @@ The MIT License - Copyright (c) 2012 Ilya Grigorik
 [buildforubuntu]: https://code.google.com/p/dart/wiki/BuildDartSDKOnUbuntu10_04
 [communitybuilds]: https://github.com/selkhateeb/heroku-vagrant-dart-build/releases
 [cedar14]: https://devcenter.heroku.com/articles/cedar-14-migration
-[download]: https://www.dartlang.org/tools/download_archive/
+[download]: https://www.dartlang.org/install/archive
