@@ -115,6 +115,13 @@ for filename in `find . -name pubspec.yaml | grep -v dart-sdk | grep -v pub-cach
         message '*** Skipping pub build because "web" folder not found'
     fi
 
+    AQUEDUCT_DEP=`cat .packages | grep ^aqueduct`
+    if [ ${#AQUEDUCT_DEP} -ne 0 ]; then
+      AQ_LIB_PATH=${AQUEDUCT_DEP:16}
+      AQ_PATH=`dirname $AQ_LIB_PATH`
+      /app/dart-sdk/bin/pub global activate -spath $AQ_PATH
+    fi
+
 done
 
 # I think heroku deletes all the contents of /app and replaces it with
