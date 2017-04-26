@@ -35,7 +35,7 @@ $> git add -A .
 $> git commit -am "first commit"
 $> heroku create myfirstdartappforheroku
 $> heroku config:set DART_SDK_URL=<archive url>
-$> heroku config:add BUILDPACK_URL=https://github.com/igrigorik/heroku-buildpack-dart.git
+$> heroku buildpacks:set https://github.com/igrigorik/heroku-buildpack-dart.git 
 ```
 
 Push the app to Heroku. Learn more about [deploying to Heroku with git][deploy].
