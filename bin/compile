@@ -100,21 +100,6 @@ for filename in `find . -name pubspec.yaml | grep -v dart-sdk | grep -v pub-cach
     #start pub from the /app folder to have correct symlink paths
     /app/dart-sdk/bin/pub get
 
-    if [ -d "web" ]
-    then
-        message "*** Running pub build"
-        if [[ -z "$DART_BUILD_CMD" ]]
-        then
-            message 'Building with "pub build"'
-            /app/dart-sdk/bin/pub build
-        else
-            message "Building with \"$DART_BUILD_CMD\""
-            eval $DART_BUILD_CMD
-        fi
-    else
-        message '*** Skipping pub build because "web" folder not found'
-    fi
-
     for package in $DART_GLOBAL_PACKAGES
     do
         PACKAGE_ELEMENTS=(${package//@/ })
