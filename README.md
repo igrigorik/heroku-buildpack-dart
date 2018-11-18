@@ -77,14 +77,22 @@ web: ./dart-sdk/bin/dart bin/basic_http_server.dart
 ### Overriding the build command
 
 By default `pub build` is launched after `pub get`, it can be useful to use
-another command: for instance `pub build --mode=debug` or 
+another command: for instance `pub build --mode=debug` or
 `/app/dart-sdk/bin/dart build.dart`:
 
 ```bash
 $> heroku config:set DART_BUILD_CMD="/app/dart-sdk/bin/dart build.dart"
 ```
 
-## Example 
+### Activating global packages
+
+You can activate global packages by providing the environment variable `DART_GLOBAL_PACKAGES`. Each globally activated package is space delimited and takes the form of `package_name@1.0.0`:
+
+```bash
+$> heroku config:set DART_GLOBAL_PACKAGES="aqueduct@3.0.0"
+```
+
+## Example
 
 See `test-app` directory for the world simplest Dart web app running on
 Heroku.
