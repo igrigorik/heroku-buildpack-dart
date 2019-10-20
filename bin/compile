@@ -119,14 +119,11 @@ message "-----> Dart reports version: $CAN_DART_RUN"
 
 cd $BUILD_DIR
 
-if $PUBSPEC_PATH 
+if $PUBSPEC_PATH=="" 
 then
+  message "!!!!!!!!!!!!! path not specified"
+else
   message "!!!!!!!!!!!!! path specified: $PUBSPEC_PATH"
-fi
-
-if $VVV 
-then
-  message "!!!!!!!!!!!!! something wrong"
 fi
 
 for filename in `find . -name pubspec.yaml | grep -v dart-sdk | grep -v pub-cache`; do
