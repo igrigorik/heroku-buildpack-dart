@@ -28,8 +28,8 @@ export_env_dir() {
 }
 
 build_pubspec() {
-  filename = $1
-  message "...building $filename"
+  pubspec=$1
+  message "...building $pubspec"
 }
 
 export_env_dir "$3"
