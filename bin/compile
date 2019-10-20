@@ -89,6 +89,10 @@ message "-----> Dart reports version: $CAN_DART_RUN"
 cd $BUILD_DIR
 
 for filename in `find . -name pubspec.yaml | grep -v dart-sdk | grep -v pub-cache`; do
+    # patch start
+    message filename
+    # patch end
+    
     pub_dir=`dirname $filename`
     message "*** Found pubspec.yaml in $BUILD_DIR/$pub_dir"
     cd $BUILD_DIR/$pub_dir
