@@ -28,8 +28,34 @@ export_env_dir() {
 }
 
 build_pubspec() {
-  pubspec=$1
-  message "...building $pubspec"
+  filename=$1
+  message "building $filename"
+  
+  pub_dir=`dirname $filename`
+    message "*** Found pubspec.yaml in $BUILD_DIR/$pub_dir"
+    cd $BUILD_DIR/$pub_dir
+
+    message "*** Running pub get"
+
+    /app/dart-sdk/bin/pub --version
+
+    #start pub from the /app folder to have correct symlink paths
+    /app/dart-sdk/bin/pub get
+
+    if [ -d "web" ]
+    then
+        message "*** Running pub build"
+        if [[ -z "$DART_BUILD_CMD" ]]
+        then
+            message 'Building with "pub build"'
+            /app/dart-sdk/bin/pub build
+        else
+            message "Building with \"$DART_BUILD_CMD\""
+            eval $DART_BUILD_CMD
+        fi
+    else
+        message '*** Skipping pub build because "web" folder not found'
+    fi
 }
 
 export_env_dir "$3"
@@ -94,36 +120,7 @@ message "-----> Dart reports version: $CAN_DART_RUN"
 cd $BUILD_DIR
 
 for filename in `find . -name pubspec.yaml | grep -v dart-sdk | grep -v pub-cache`; do
-    # patch start
     build_pubspec $filename
-    # patch end
-    
-    pub_dir=`dirname $filename`
-    message "*** Found pubspec.yaml in $BUILD_DIR/$pub_dir"
-    cd $BUILD_DIR/$pub_dir
-
-    message "*** Running pub get"
-
-    /app/dart-sdk/bin/pub --version
-
-    #start pub from the /app folder to have correct symlink paths
-    /app/dart-sdk/bin/pub get
-
-    if [ -d "web" ]
-    then
-        message "*** Running pub build"
-        if [[ -z "$DART_BUILD_CMD" ]]
-        then
-            message 'Building with "pub build"'
-            /app/dart-sdk/bin/pub build
-        else
-            message "Building with \"$DART_BUILD_CMD\""
-            eval $DART_BUILD_CMD
-        fi
-    else
-        message '*** Skipping pub build because "web" folder not found'
-    fi
-
 done
 
 # I think heroku deletes all the contents of /app and replaces it with
