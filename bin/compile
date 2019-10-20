@@ -119,12 +119,13 @@ message "-----> Dart reports version: $CAN_DART_RUN"
 
 cd $BUILD_DIR
 
-if $PUBSPEC_PATH then
+if $PUBSPEC_PATH 
+then
   message "!!!!!!!!!!!!! path specified: $PUBSPEC_PATH"
-  
 fi
 
-if $VVV then
+if $VVV 
+then
   message "!!!!!!!!!!!!! something wrong"
 fi
 
