@@ -121,14 +121,15 @@ cd $BUILD_DIR
 
 if $PUBSPEC_PATH=="" 
 then
-  message "!!!!!!!!!!!!! path not specified"
+  message "PUBSPEC_PATH is not set. Looping through all pubspec.yaml files."
+  for filename in `find . -name pubspec.yaml | grep -v dart-sdk | grep -v pub-cache`; do
+    build_pubspec $filename
+  done
 else
-  message "!!!!!!!!!!!!! path specified: $PUBSPEC_PATH"
+  message "PUBSPEC_PATH is set to $PUBSPEC_PATH"
+  build_pubspec $PUBSPEC_PATH
 fi
 
-for filename in `find . -name pubspec.yaml | grep -v dart-sdk | grep -v pub-cache`; do
-    build_pubspec $filename
-done
 
 # I think heroku deletes all the contents of /app and replaces it with
 # whatever is in $BUILD_DIR, so copy over the pub-cache. Why not put it in
