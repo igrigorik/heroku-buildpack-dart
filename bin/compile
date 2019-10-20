@@ -27,6 +27,11 @@ export_env_dir() {
   fi
 }
 
+build_pubspec() {
+  filename = $1
+  message "...building $filename"
+}
+
 export_env_dir "$3"
 
 mkdir -p "$1" "$2"
@@ -90,7 +95,7 @@ cd $BUILD_DIR
 
 for filename in `find . -name pubspec.yaml | grep -v dart-sdk | grep -v pub-cache`; do
     # patch start
-    message "$filename"
+    build_pubspec filename
     # patch end
     
     pub_dir=`dirname $filename`
