@@ -32,30 +32,30 @@ build_pubspec() {
   message "building $filename"
   
   pub_dir=`dirname $filename`
-    message "*** Found pubspec.yaml in $BUILD_DIR/$pub_dir"
-    cd $BUILD_DIR/$pub_dir
+  message "*** Found pubspec.yaml in $BUILD_DIR/$pub_dir"
+  cd $BUILD_DIR/$pub_dir
 
-    message "*** Running pub get"
+  message "*** Running pub get"
 
-    /app/dart-sdk/bin/pub --version
+  /app/dart-sdk/bin/pub --version
 
-    #start pub from the /app folder to have correct symlink paths
-    /app/dart-sdk/bin/pub get
+  #start pub from the /app folder to have correct symlink paths
+  /app/dart-sdk/bin/pub get
 
-    if [ -d "web" ]
+  if [ -d "web" ]
+  then
+    message "*** Running pub build"
+    if [[ -z "$DART_BUILD_CMD" ]]
     then
-        message "*** Running pub build"
-        if [[ -z "$DART_BUILD_CMD" ]]
-        then
-            message 'Building with "pub build"'
-            /app/dart-sdk/bin/pub build
-        else
-            message "Building with \"$DART_BUILD_CMD\""
-            eval $DART_BUILD_CMD
-        fi
+      message 'Building with "pub build"'
+      /app/dart-sdk/bin/pub build
     else
-        message '*** Skipping pub build because "web" folder not found'
+      message "Building with \"$DART_BUILD_CMD\""
+      eval $DART_BUILD_CMD
     fi
+  else
+    message '*** Skipping pub build because "web" folder not found'
+  fi
 }
 
 export_env_dir "$3"
@@ -118,6 +118,15 @@ CAN_DART_RUN=`/app/dart-sdk/bin/dart --version`
 message "-----> Dart reports version: $CAN_DART_RUN"
 
 cd $BUILD_DIR
+
+if $PUBSPEC_PATH then
+  message "!!!!!!!!!!!!! path specified: $PUBSPEC_PATH"
+  
+fi
+
+if $VVV then
+  message "!!!!!!!!!!!!! something wrong"
+fi
 
 for filename in `find . -name pubspec.yaml | grep -v dart-sdk | grep -v pub-cache`; do
     build_pubspec $filename
