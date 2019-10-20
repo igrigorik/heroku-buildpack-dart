@@ -95,7 +95,7 @@ cd $BUILD_DIR
 
 for filename in `find . -name pubspec.yaml | grep -v dart-sdk | grep -v pub-cache`; do
     # patch start
-    build_pubspec filename
+    build_pubspec $filename
     # patch end
     
     pub_dir=`dirname $filename`
