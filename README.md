@@ -65,7 +65,7 @@ $> heroku config:set DART_SDK_URL=<archive url>
 
 ### Specifying the script
 
-The `Procfile` defines the file to run when the application starts. We
+Create the file `Procfile` in the root of your package to define the file to run when the application starts. We
 recommend to put the server script into your application's `bin/` directory.
 
 The sample app's `Procfile` looks like:
@@ -73,6 +73,12 @@ The sample app's `Procfile` looks like:
 ```
 web: ./dart-sdk/bin/dart bin/basic_http_server.dart
 ```
+
+### Specifying the pubspect.yaml
+
+By default every pubspec.yaml will be processed.
+
+You can define the environment variable PUBSPEC_PATH to specify which pubspec.yaml to process.
 
 ### Overriding the build command
 

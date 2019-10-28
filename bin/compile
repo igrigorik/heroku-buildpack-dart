@@ -27,6 +27,37 @@ export_env_dir() {
   fi
 }
 
+build_pubspec() {
+  filename=$1
+  message "building $filename"
+  
+  pub_dir=`dirname $filename`
+  message "*** Found pubspec.yaml in $BUILD_DIR/$pub_dir"
+  cd $BUILD_DIR/$pub_dir
+
+  message "*** Running pub get"
+
+  /app/dart-sdk/bin/pub --version
+
+  #start pub from the /app folder to have correct symlink paths
+  /app/dart-sdk/bin/pub get
+
+  if [ -d "web" ]
+  then
+    message "*** Running pub build"
+    if [[ -z "$DART_BUILD_CMD" ]]
+    then
+      message 'Building with "pub build"'
+      /app/dart-sdk/bin/pub build
+    else
+      message "Building with \"$DART_BUILD_CMD\""
+      eval $DART_BUILD_CMD
+    fi
+  else
+    message '*** Skipping pub build because "web" folder not found'
+  fi
+}
+
 export_env_dir "$3"
 
 mkdir -p "$1" "$2"
@@ -88,34 +119,17 @@ message "-----> Dart reports version: $CAN_DART_RUN"
 
 cd $BUILD_DIR
 
-for filename in `find . -name pubspec.yaml | grep -v dart-sdk | grep -v pub-cache`; do
-    pub_dir=`dirname $filename`
-    message "*** Found pubspec.yaml in $BUILD_DIR/$pub_dir"
-    cd $BUILD_DIR/$pub_dir
+if [ -z "$PUBSPEC_PATH" ]
+then
+  message "PUBSPEC_PATH is not set. Looping through all pubspec.yaml files."
+  for filename in `find . -name pubspec.yaml | grep -v dart-sdk | grep -v pub-cache`; do
+    build_pubspec $filename
+  done
+else
+  message "PUBSPEC_PATH is set to $PUBSPEC_PATH"
+  build_pubspec $PUBSPEC_PATH
+fi
 
-    message "*** Running pub get"
-
-    /app/dart-sdk/bin/pub --version
-
-    #start pub from the /app folder to have correct symlink paths
-    /app/dart-sdk/bin/pub get
-
-    if [ -d "web" ]
-    then
-        message "*** Running pub build"
-        if [[ -z "$DART_BUILD_CMD" ]]
-        then
-            message 'Building with "pub build"'
-            /app/dart-sdk/bin/pub build
-        else
-            message "Building with \"$DART_BUILD_CMD\""
-            eval $DART_BUILD_CMD
-        fi
-    else
-        message '*** Skipping pub build because "web" folder not found'
-    fi
-
-done
 
 # I think heroku deletes all the contents of /app and replaces it with
 # whatever is in $BUILD_DIR, so copy over the pub-cache. Why not put it in
