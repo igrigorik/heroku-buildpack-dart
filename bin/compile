@@ -35,14 +35,17 @@ build_pubspec() {
   message "*** Found pubspec.yaml in $BUILD_DIR/$pub_dir"
   cd $BUILD_DIR/$pub_dir
 
+  DART_PATH=/app/dart-sdk/bin
+  PUB_CACHE_BIN=app/pub-cache/bin
+  export PATH="$PATH":"$DART_PATH":$PUB_CACHE_BIN
   message "*** Running pub get"
 
-  /app/dart-sdk/bin/pub --version
+  pub --version
 
   #start pub from the /app folder to have correct symlink paths
-  /app/dart-sdk/bin/pub get  
-  export PATH="$PATH":"$HOME/pub-cache/bin"
-  /app/dart-sdk/bin/dart pub global activate webdev
+  pub get  
+  
+  dart pub global activate webdev
   if [ -d "web" ]
   then
     message "*** Running webdev build"
