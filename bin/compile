@@ -37,7 +37,7 @@ build_pubspec() {
 
   DART_PATH=/app/dart-sdk/bin
   PUB_CACHE_BIN=app/.pub-cache/bin
-  export PATH="$PATH":"$DART_PATH":$PUB_CACHE_BIN
+  export PATH=$PATH:$DART_PATH:$PUB_CACHE_BIN
   message "*** Running pub get"
 
   pub --version
