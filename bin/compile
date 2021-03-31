@@ -52,7 +52,7 @@ build_pubspec() {
     if [[ -z "$DART_BUILD_CMD" ]]
     then
       message 'Building with "webdev build"'
-      webdev build
+      webdev build --delete-conflicting-outputs
     else
       message "Building with \"$DART_BUILD_CMD\""
       eval $DART_BUILD_CMD
