@@ -10,7 +10,7 @@ This is now the default stack on Heroku.)
 
 * Runs Dart VM as a server in Heroku's cloud
 * Installs packages with [pub][]
-* Builds the client app with [pub build][build]
+* Builds the client app with [webdev build][build]
 
 ## Getting Started
 
@@ -72,6 +72,14 @@ The sample app's `Procfile` looks like:
 
 ```
 web: ./dart-sdk/bin/dart bin/basic_http_server.dart
+```
+
+Add build_runner and build_web_compilers to you dev_dependencies in pubspec.yaml
+```
+dev_dependencies:
+  build_runner:
+  build_web_compilers: 
+  ...
 ```
 
 ### Specifying the pubspect.yaml
